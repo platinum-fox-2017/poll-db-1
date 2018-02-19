@@ -7,7 +7,7 @@ db.serialize(()=>{
      name varchar,
      party varchar,
      location varchar,
-     grade_current varchar)`);
+     grade_current integer)`);
     db.run(`create table if not exists voter
     (id integer primary key autoincrement,
      first_name varchar,
@@ -16,8 +16,8 @@ db.serialize(()=>{
      age integer)`);
     db.run(`create table if not exists votes
     (id integer primary key autoincrement,
-     voter_id varchar,
-     candidate_id varchar,
+     voter_id integer,
+     candidate_id integer,
      foreign key (candidate_id) references candidate(id),
      foreign key (voter_id) references voter(id))`);
 });

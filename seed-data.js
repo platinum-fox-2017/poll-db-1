@@ -46,6 +46,6 @@ class Votes {
         })
     }
 }
-// Politicians.insert();
+Politicians.insert();
 // Voters.insert();
 // Votes.insert();
