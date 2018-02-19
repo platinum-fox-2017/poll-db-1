@@ -42,18 +42,16 @@ db.serialize(function() {
 
 //votes
 let dataVotes = readVote.split('\n')
-for(let k=1;k<dataVoter.length;k++){
+// console.log(dataVotes,'----------')
+for(let k=1;k<dataVotes.length;k++){
   let dataRowVote = dataVotes[k].split(',')
-  // console.log(dataRowVoter[0])
-  db.run(`insert into Votes values(
-    null,
-    ${dataRowVote[0]},
-    ${dataRowVote[1]}
-  )`,function(err){
-    if(err){
-      console.log(err)
-    }
-  })
+  
+  // console.log(dataRowVote[0])
+  // db.run(`insert into Votes values(
+  //   null,
+  //   ${dataRowVote[0]},
+  //   ${dataRowVote[1]}
+  // )`)
 }
 });
  
