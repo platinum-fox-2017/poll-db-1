@@ -30,6 +30,10 @@ db.serialize(function() {
             if (err) {return console.log(err.message);}
         });
     }
+
+    db.run(`INSERT INTO Voters (first_name,last_name,gender,age) VALUES ("Ervan", "Adetya", "male", 20)`);
+    db.run(`UPDATE Voters SET age = 18 WHERE first_name = "Ervan"`);
+    db.run(`DELETE FROM Voters WHERE first_name = "Ervan"`);
 });
 
 db.close();
