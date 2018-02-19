@@ -1,0 +1,21 @@
+//your code here
+CREATE TABLE voters (
+votersId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+first_name TEXT NOT NULL,
+last_name TEXT NOT NULL,
+gender TEXT NOT NULL,
+age INTEGER NOT NULL);
+
+CREATE TABLE politicians (
+politiciansId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+name TEXT NOT NULL,
+party TEXT NOT NULL,
+location TEXT NOT NULL,
+grade_current REAL NOT NULL);
+
+CREATE TABLE votes (
+votesId INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+voterId INTEGER NOT NULL,
+politiciansId INTEGER NOT NULL,
+FOREIGN KEY (voterId) REFERENCES voters(votersId),
+FOREIGN KEY (politiciansId) REFERENCES politicians(politiciansId));
