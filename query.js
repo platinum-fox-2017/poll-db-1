@@ -106,7 +106,7 @@ function deleteVotes(id){
 function selectPoliticianRating(min,max){
   let query = `SELECT name,party,grade_current
           FROM Politician
-          WHERE grade_current BETWEEN ${min} and ${max}
+          WHERE grade_current BETWEEN ${min} and ${max} and party = "R"
           ORDER BY grade_current ASC`
   var table = new Table({
     head: ['Name', 'Party','Grade Current']
@@ -122,7 +122,7 @@ function selectPoliticianRating(min,max){
         )
 }
 
-// selectPoliticianRating(9,11)
+selectPoliticianRating(9,11)
 
 function countVote(name){
   let query = `SELECT COUNT(*) as TotalVote, name FROM Politician
@@ -142,7 +142,7 @@ function countVote(name){
         )
 }
 
-// countVote('Olympia Snowe')
+countVote('Olympia Snowe')
 
 
 function countVoteByName(name){
@@ -163,7 +163,7 @@ function countVoteByName(name){
           }
         )
 }
-// countVoteByName('Adam')
+countVoteByName('Adam')
 
 
 function mostElectedPolitician(limit){
@@ -186,7 +186,7 @@ function mostElectedPolitician(limit){
           }
         )
 }
-// mostElectedPolitician(5)
+mostElectedPolitician(3)
 
 //subquery
 function searchTheVoters(name){
@@ -199,7 +199,7 @@ var table = new Table({
   head: ['First Name','Last Name','Gender','Age']
 });
 db.all(query, function(err,data){
-  console.log(data);
+  // console.log(data);
   for(let i =0;i<data.length;i++){
     table.push(
       [`${data[i].first_name}`,`${data[i].last_name}`,`${data[i].gender}`,`${data[i].age}`]
