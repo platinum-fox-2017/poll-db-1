@@ -15,10 +15,17 @@ class Politicians {
     }
 
     seedData() {
+        let data = '';
         for (let i = 0; i < this.data.length; i++) {
             let splitdata = this.data[i].split(',')
-            db.run('INSERT INTO politicians VALUES(null, ?,  ?,  ?,  ?)', splitdata[0], splitdata[1], splitdata[2], splitdata[3])
+            data += '(' + null + ',' + `'${splitdata[0]}'` + ',' + `'${splitdata[1]}'` + ',' + `'${splitdata[2]}'` + ',' + splitdata[3] +  ')'
+            if (this.data.length -1 === i) {
+                data += '';
+            } else {
+                data += ',';
+            }
         }
+        db.run(`INSERT INTO politicians VALUES ${data}`);
     }
 
     insertData(name, party, location, grade_current) {
@@ -86,10 +93,18 @@ class Voters {
     }
 
     seedData() {
-        for (let i = 1; i < this.data.length; i++) {
+        let data = '';
+        for (let i = 0; i < this.data.length; i++) {
             let splitdata = this.data[i].split(',')
-            db.run('INSERT INTO voters VALUES(null, ?, ?, ?, ?)', [splitdata[0], splitdata[1], splitdata[2], splitdata[3]])
+            data += "("+ null + "," + `"${splitdata[0]}"` +  "," +  `"${splitdata[1]}"`+ "," + `"${splitdata[2]}"` + "," + splitdata[3] +")"
+            if (this.data.length - 1 === i) {
+                data += '';
+            } else {
+                data += ',';
+            }
         }
+        
+        db.run(`INSERT INTO voters VALUES${data}`)
     }
 }
 
@@ -108,10 +123,17 @@ class Votes {
     }
 
     seedData() {
-       for (let i = 0; i < this.data.length; i++) {
-           let splitdata = this.data[i].split(',')
-           db.run('INSERT INTO votes VALUES(null, ?, ?)', splitdata[0], splitdata[1])
-       }
+    let data = '';
+    for (let i = 0; i < this.data.length; i++) {
+        let splitdata = this.data[i].split(',')
+        data += '(' + null + ',' + splitdata[0] + ',' + splitdata[1] + ')'
+        if (this.data.length - 1 === i) {
+            data += '';
+        } else {
+            data += ',';
+        }
+    }
+    db.run(`INSERT INTO votes VALUES${data}`)
     }
 }
 
