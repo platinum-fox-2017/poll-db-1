@@ -1,0 +1,34 @@
+CREATE TABLE politicians (
+politician_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+politician_name TEXT NOT NULL,
+party TEXT NOT NULL,
+location TEXT NOT NULL,
+grade_current REAL NOT NULL
+);
+
+CREATE TABLE voters (
+voter_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+first_name TEXT NOT NULL,
+last_name TEXT NOT NULL,
+gender TEXT NOT NULL,
+age INTEGER NOT NULL
+);
+
+CREATE TABLE votes (
+vote_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+voter_id INTEGER NOT NULL,
+politician_id INTEGER NOT NULL,
+FOREIGN KEY (voter_id) REFERENCES voters(voter_id),
+FOREIGN KEY (politician_id) REFERENCES politicians(politician_id)
+);
+
+-----------------------------
+Release 3
+1.
+SELECT * FROM politicians
+WHERE party = 'R';
+
+2.
+SELECT * FROM votes
+WHERE politician_id = 17;
+
