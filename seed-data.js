@@ -159,6 +159,10 @@ class ReadData{
             console.log(data)
         })
     }
+
+    db2_0(){
+        
+    }
 }
 
 let data = new ReadData()
@@ -182,3 +186,4 @@ let votersObj = {
 // data.release3_3()
 // data.release3_4()
 // data.release3_5()
+data.db2_0()
