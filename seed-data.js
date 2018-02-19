@@ -5,7 +5,6 @@ const db = new sqlite3.Database('database.db');
 class Politicians {
     constructor() {
     }
-
     static getData() {
       let data = fs.readFileSync('politicians.csv','utf-8').split('\n')
       return data
@@ -13,15 +12,18 @@ class Politicians {
 
     static insertData() {
       let list = this.getData()
+      let arrData = []
       for(let i = 1; i < list.length; i++) {
-        if(list[i] !== '') {
-          let data = list[i].split(',')
+        arrData.push(list[i].split(','))
+      }
+      for(let i = 0; i < arrData.length; i++) {
+        if(arrData[i] !== '') {
           db.run(`INSERT INTO Politicians (name,party,location,grade_current)
           VALUES($name,$party,$location,$grade_current)`,{
-            $name: data[0],
-            $party: data[1],
-            $location: data[2],
-            $grade_current: data[3]
+            $name: arrData[i][0],
+            $party: arrData[i][1],
+            $location: arrData[i][2],
+            $grade_current: arrData[i][3]
           })
         }
       }
@@ -41,15 +43,18 @@ class Voters {
 
   static insertData() {
     let list = this.getData()
+    let arrData = []
     for(let i = 1; i < list.length; i++) {
-      if(list[i] !== '') {
-        let data = list[i].split(',')
+      arrData.push(list[i].split(','))
+    }
+    for(let i = 0; i < arrData.length; i++) {
+      if(arrData[i] !== '') {
         db.run(`INSERT INTO Voters (first_name,last_name,gender,age)
         VALUES($first_name,$last_name,$gender,$age)`,{
-          $first_name: data[0],
-          $last_name: data[1],
-          $gender: data[2],
-          $age: data[3]
+          $first_name: arrData[i][0],
+          $last_name: arrData[i][1],
+          $gender: arrData[i][2],
+          $age: arrData[i][3]
         })
       }
     }
@@ -68,19 +73,22 @@ class Votes {
 
   static insertData() {
     let list = this.getData()
+    let arrData = []
     for(let i = 1; i < list.length; i++) {
-      if(list[i] !== '') {
-        let data = list[i].split(',')
+      arrData.push(list[i].split(','))
+    }
+    for(let i = 0; i < arrData.length; i++) {
+      if(arrData[i] !== '') {
         db.run(`INSERT INTO Votes (voterId,politicianId)
         VALUES($voterId,$politicianId)`,{
-          $voterId: data[0],
-          $politicianId: data[1],
+          $voterId: arrData[i][0],
+          $politicianId: arrData[i][1],
         })
       }
     }
   }
 }
-// console.log(Politicians.getData())
+
 Politicians.insertData();
 Voters.insertData();
 Votes.insertData();
