@@ -82,17 +82,57 @@ BETWEEN 9 AND 11;`, (err, data) => {
         }
     })
 
-db.all(`SELECT COUNT(*) as totalVote,
-name
-from Politician INNER JOIN Vote ON Politician.id = Vote.politicianId
-WHERE Politician.name = 'Olympia Snowe'`, (err, data) => {
+// db.all(`SELECT COUNT(*) as totalVote,
+// name
+// from Politician INNER JOIN Vote ON Politician.id = Vote.politicianId
+// WHERE Politician.name = 'Olympia Snowe'`, (err, data) => {
+//         if (err) {
+//             console.log(err)
+//         }
+//         else {
+//             console.log(data)
+
+//         }
+//     })
+
+// db.all(`SELECT Politician.name,
+// COUNT(*) as totalVote
+// from Politician INNER JOIN Vote ON
+// Politician.id = Vote.politicianId
+// WHERE Politician.name LIKE 'Adam%'
+// GROUP BY Politician.name`, (err, data) => {
+//         if (err) {
+//             console.log(err)
+//         } else {
+//             console.log(data)
+//         }
+//     })
+
+// db.all(`SELECT COUNT(*) as totalVote,
+// Politician.name,
+// Politician.party,
+// Politician.location from Politician INNER JOIN Vote ON
+// Politician.id = Vote.politicianId GROUP BY Politician.name ORDER BY totalVote DESC LIMIT 3;
+// `, (err, data) => {
+//         if (err) {
+//             console.log(err)
+//         } else {
+//             console.log(data)
+
+//         }
+//     })
+
+
+db.all(`SELECT first_name,
+last_name,
+gender,
+age from Voter INNER JOIN
+Vote ON Voter.id = Vote.votersId
+WHERE (SELECT id FROM Politician where name = 'Olympia Snowe') = Vote.politicianId`, (err, data) => {
         if (err) {
             console.log(err)
-        }
-        else {
+        } else {
             console.log(data)
 
         }
     })
-
-db.all(``)
