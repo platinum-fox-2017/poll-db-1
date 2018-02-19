@@ -5,7 +5,8 @@ const db = new sqlite3.Database("./poll.db", sqlite3.OPEN_READWRITE, err => {
 });
 
 db.serialize(() => {
-  db.all(`SELECT name, party, grade_current FROM Politicians WHERE party = 'R' AND grade_current BETWEEN 9 AND 11`, (err, rows) => {
+  db.all(`SELECT name, party, grade_current FROM Politicians 
+         WHERE party = 'R' AND grade_current BETWEEN 9 AND 11`, (err, rows) => {
     if(err) throw err
     console.log(rows)
   })
