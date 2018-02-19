@@ -3,6 +3,8 @@ const db = new sqlite3.Database('polldb.db');
 
 // 1 Tampilkan nama politician, partai dan grade_current politician tersebut yang berada 
 // di partai R dan memiliki grade_current range 9 s/d 11
+
+db.serialize(function() {
 let query1 = db.all(`select name,party,grade_current from Politicians
 where party = 'R' 
 AND grade_current between 9 and 11`,function(err,data){
@@ -58,3 +60,4 @@ where Votes.politicianId = (select id from Politicians where Politicians.name = 
     console.log(data)
   }
 })
+});

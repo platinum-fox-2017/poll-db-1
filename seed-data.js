@@ -4,7 +4,6 @@ const fs = require ('fs')
 
 
 let readPolitician = fs.readFileSync('politicians.csv','utf8')
-// console.log(readPolitician.split('\n'))
 let readVoter = fs.readFileSync('voters.csv','utf8')
 let readVote = fs.readFileSync('votes.csv','utf8')
 
@@ -15,18 +14,17 @@ db.serialize(function() {
     let dataRow = dataPolitician[i].split(',')
     query+=`(null,"${dataRow[0]}","${dataRow[1]}","${dataRow[2]}",${dataRow[3]}),` 
   }
-  // console.log(query.substring(0, query.length - 1))
-  // console.log(query)
+
   let newQuery = query.substring(0, query.length - 1)
   // db.run(newQuery)
 
-  //voters-------------------------
+  //-------------voters-------------------------
   let dataVoter = readVoter.split('\n')
   let arrVoter = []
   for(let j =1;j<dataVoter.length;j++){
     arrVoter.push(dataVoter[j].split(','))
   }
-  // console.log(arrVoter)
+
   for(let k =0;k<arrVoter.length;k++){
     // console.log(arrVoter[k][0])
     //   db.run(`insert into Voters values(
@@ -46,7 +44,7 @@ for(let l=1;l<dataVotes.length;l++){
   let dataRowVote = dataVotes[l].split(',')
   queryVotes+= `(null,${dataRowVote[0]},${dataRowVote[1]}),`
 }
-// console.log(queryVotes.substring(0,queryVotes.length-1))
+
 let newQueryVote = queryVotes.substring(0,queryVotes.length-1)
   // db.run(newQueryVote)
 
