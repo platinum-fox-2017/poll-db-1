@@ -1,0 +1,38 @@
+CREATE TABLE politicians (
+  politicians_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  name TEXT,
+  party TEXT,
+  location TEXT,
+  grade_current REAL
+);
+
+INSERT INTO politicians (politicians_id, name, party, location, grade_current)
+VALUES (politicians_id, name, party, location, grade_current)
+
+
+CREATE TABLE voter (
+  voter_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  first_name TEXT,
+  last_name TEXT,
+  gender TEXT,
+  age INTEGER
+);
+
+
+INSERT INTO voter (voter_id, first_name, last_name, gender, age)
+VALUES (voter_id, first_name, last_name, gender, age)
+
+
+CREATE TABLE votes (
+  votes_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  politicians_id INTEGER,
+  voter_id INTEGER,
+  FOREIGN KEY (politicians_id) REFERENCES politicians(politicians_id),
+  FOREIGN KEY (voter_id) REFERENCES voter(voter_id)
+);
+
+
+
+
+INSERT INTO votes (votes_id, politicians_id, voter_id)
+VALUES (votes_id, politicians_id, voter_id)
