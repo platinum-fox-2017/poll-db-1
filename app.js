@@ -60,9 +60,39 @@ let datavote = {
 }
 
 // insertData('Politician', dataPolitician)
-// let andrewkusuma = insertData('Voter', datavoter)
-// let vote = insertData('Vote', datavote)
-
+// insertData('Voter', datavoter)
+// insertData('Vote', datavote)
 // deleteData('Politician', 21)
-
 // updateData('Politician', 'name', 'aaaaa', 23)
+
+// const selectData =
+db.all(`select politician.name,
+politician.party,
+politician.grade_current
+from politician where politician.party = 'R'
+AND
+politician.grade_current
+BETWEEN 9 AND 11;`, (err, data) => {
+        if (err) {
+            console.log(err)
+
+        } else {
+            console.log(data)
+
+        }
+    })
+
+db.all(`SELECT COUNT(*) as totalVote,
+name
+from Politician INNER JOIN Vote ON Politician.id = Vote.politicianId
+WHERE Politician.name = 'Olympia Snowe'`, (err, data) => {
+        if (err) {
+            console.log(err)
+        }
+        else {
+            console.log(data)
+
+        }
+    })
+
+db.all(``)

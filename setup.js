@@ -21,8 +21,8 @@ db.serialize(function () {
 
     db.run(`CREATE TABLE IF NOT EXISTS Vote(
         id integer PRIMARY KEY AUTOINCREMENT,
-        politicianId integer,
         votersId integer,
+        politicianId integer,
         FOREIGN KEY (politicianId) REFERENCES Politician(id), FOREIGN KEY (votersId) REFERENCES voters(id)
     );`)
 
