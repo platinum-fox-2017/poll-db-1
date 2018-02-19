@@ -22,4 +22,4 @@ function deleteData(table, id) {
 
 insertData('Valensio Deva', 'D', 'ID', 8.1234)
 updateData('IND', 21)
-deleteData('Politicians', 21)
+deleteData('Politicians', 23)
