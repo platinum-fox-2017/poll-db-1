@@ -1,0 +1,38 @@
+CREATE TABLE politicians (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    party TEXT NOT NULL,
+    location TEXT NOT NULL,
+    grade_current TEXT NOT NULL
+);
+
+INSERT INTO politicians (
+    name, party, location, grade_current)
+    VALUES(
+        'Reja', 'republic', 'indonesia', 'ketua'
+    );
+
+UPDATE politicians
+SET party = 'independen'
+WHERE id = 2;
+
+DELETE FROM politicians
+WHERE id = 3;
+
+
+CREATE TABLE voters (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    firstName TEXT NOT NULL,
+    lastName TEXT NOT NULL,
+    gender TEXT NOT NULL,
+    age TEXT NOT NULL
+);
+
+CREATE TABLE votes (
+    id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    politicians_id INTEGER,
+    voters_id INTEGER,
+    FOREIGN KEY(politicians_id) REFERENCES politicians(id),
+    FOREIGN KEY(voters_id) REFERENCES voters(id)
+);
+
