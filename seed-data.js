@@ -1,58 +1,78 @@
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('database.db');
 const fs = require ('fs')
+
+
 const politician = fs.readFileSync('./politicians.csv','utf8').split('\n')
-// console.log(politician);
+function strPolitician(politician){
+  let strPolitician = ''
+  for (var i = 1; i < politician.length-1; i++) {
+    let splitArr = politician[i].split(',')
+    strPolitician += '('
+    strPolitician += '"'+splitArr[0]+'",'
+    strPolitician += '"'+splitArr[1]+'",'
+    strPolitician += '"'+splitArr[2]+'",'
+    strPolitician += splitArr[3]
+    strPolitician += '),'
+  }
+  let temp = strPolitician.substr(0,strPolitician.length-1)
+  return temp
+}
+let politicianString = strPolitician(politician)
+// console.log(politicianString);
+
+
 const voters = fs.readFileSync('./voters.csv','utf8').split('\n')
-// console.log(voters);
+function strVoters(voters){
+  let strVoter = ''
+  for (var i = 1; i < voters.length-1; i++) {
+    let splitArr = voters[i].split(',')
+    strVoter += '('
+    strVoter += '"'+splitArr[0]+'",'
+    strVoter += '"'+splitArr[1]+'",'
+    strVoter += '"'+splitArr[2]+'",'
+    strVoter += splitArr[3]
+    strVoter += '),'
+  }
+  let temp = strVoter.substr(0,strVoter.length-1)
+  return temp
+}
+let voterString = strVoters(voters)
+// console.log(voterString);
+
 const votes = fs.readFileSync('./votes.csv','utf8').split('\n')
-// console.log(votes);
+
+
+function strVotes(votes){
+  let strVote = ''
+  for (var i = 1; i < votes.length-1; i++) {
+    strVote += '('
+    strVote += votes[i]
+    strVote += '),'
+  }
+  let temp = strVote.substr(0,strVote.length-1)
+  return temp
+}
+let voteString = strVotes(votes)
+// console.log(voteString);
+
 
 function insertPejabat(){
-  // console.log(politician)
-  for(let i = 1;i<politician.length-1;i++){
-    let temp = politician[i].split(',')
+    // console.log(politicianString);
     db.run(`INSERT INTO Politician(name,party,location,grade_current)
-            VALUES ($name,$party,$location,$grade_current)`,
-            {
-              $name:temp[0],
-              $party:temp[1],
-              $location:temp[2],
-              $grade_current:temp[3]
-            })
-  }
+            VALUES ${politicianString}`)
 }
+
 function insertVotes(){
-  for(let i = 1;i<votes.length-1;i++){
-    let temp = votes[i].split(',')
     db.run(`INSERT INTO Votes(votersID,politicianID)
-            VALUES ($votersID,$politicianID)`,
-            {
-              $votersID:temp[0],
-              $politicianID:temp[1],
-            })
-  }
+            VALUES ${voteString}`)
 }
 
 function insertVoter(){
-  for(let i = 1;i<voters.length-1;i++){
-    let temp = voters[i].split(',')
-    db.run(`INSERT INTO Voters(first_name,last_name,gender,age)
-            VALUES ($first_name,$last_name,$gender,$age)`,
-            {
-              $first_name:temp[0],
-              $last_name:temp[1],
-              $gender:temp[2],
-              $age:temp[3]
-            })
-  }
+    db.run(`INSERT INTO Voters (first_name,last_name,gender,age)
+            VALUES ${voterString}`)
 }
-
-
-
-
-
 //
-// insertPejabat()
-// insertVotes()
-// insertVoter()
+insertPejabat()
+insertVotes()
+insertVoter()

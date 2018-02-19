@@ -99,3 +99,18 @@ function deleteVotes(id){
 }
 
 // deleteVotes(164)
+
+//RELEASE 3
+
+function selectPoliticianRating(min,max){
+  let query = `SELECT name,party,grade_current
+          FROM Politician
+          WHERE grade_current BETWEEN ${min} and ${max}
+          ORDER BY grade_current ASC`
+  db.all(query,function(err,data){
+            console.log(data)
+          }
+        )
+}
+
+selectPoliticianRating(9,11)
