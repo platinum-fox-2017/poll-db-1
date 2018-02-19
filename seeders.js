@@ -18,6 +18,7 @@ for (var i = 1; i < politicians.length-1; i++) {
           })
 }
 
+
 for (var i = 1; i < voters.length-1; i++) {
   let votersArr = voters[i].split(',')
   db.run(`INSERT INTO Voters(first_name, last_name, gender, age)
