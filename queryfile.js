@@ -34,7 +34,8 @@ db.serialize(function() {
 
 
 db.serialize(function() {
-    db.all("SELECT firstName,lastName,gender,Age FROM Voters JOIN Politicians_Voters ON Voters.id = Politicians_Voters.votersID WHERE polID = 17", function(err, row) {
+    db.all("SELECT firstName,lastName,gender,Age FROM Voters JOIN Politicians_Voters ON Voters.id = Politicians_Voters.votersID JOIN Politicians ON Politicians_Voters.polID = Politicians.ID WHERE name = 'Olympia Snowe' ", function(err, row) {
+        if (err) console.log (err);
         console.log(row);
         console.log('=========================')
     });
