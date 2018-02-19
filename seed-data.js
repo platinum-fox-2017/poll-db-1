@@ -62,7 +62,7 @@ class ReadData{
 
     deleteTable(nameTable,id){
         db.run(`DELETE FROM ${nameTable}
-                WHERE id = ${id};`)
+                ;`)
     }
 
     insert(object,nameTable){
@@ -87,6 +87,7 @@ class ReadData{
 
     seed_data(source,table){
         this.processData(source,(convertData)=>{
+            let text = ""
             for(let i = 0; i < convertData.length; i++){
                 let string = ""
                 Object.keys(convertData[i]).forEach(function(key,index){
@@ -103,11 +104,59 @@ class ReadData{
                         string += `"${convertData[i][key]}",`
                     }
                 })
-                let text = `null, ${string}`
                 
-                db.run(`INSERT INTO ${table}
-                    VALUES(${text});`)
+                if(i < convertData.length - 1){
+                    text += `(null, ${string}),`
+                }else{
+                    text += `(null, ${string})`
+                }
             }
+            db.run(`INSERT INTO ${table}
+                    VALUES ${text};`)
+        })
+    }
+
+    release3_1(){
+        let query = `SELECT name, party, grade_current from Politicians where grade_current BETWEEN 9 AND 11 AND party = "R"`
+        db.all(query,(err,data)=>{
+            console.log(data)
+        })
+    }
+
+    release3_2(){
+        let query = `SELECT count(Votes.id) AS totalVotes, Politicians.name from Votes JOIN Politicians ON Votes.politicianId = Politicians.id where Politicians.name = "Olympia Snowe"`
+        db.all(query,(err,data)=>{
+            console.log(data)
+        })
+    }
+
+    release3_3(){
+        let query = `SELECT * FROM Politicians WHERE name LIKE "adam%"`
+        db.all(query,(err,data)=>{
+            console.log(data)
+        })
+    }
+
+    release3_4(){
+        let query = `SELECT COUNT(Votes.voterId) AS 'totalVote', Politicians.name, Politicians.party, Politicians.location FROM Votes 
+                    JOIN Politicians 
+                    ON Votes.politicianId = Politicians.id
+                    GROUP BY Politicians.name
+                    ORDER BY COUNT(Votes.voterId) desc
+                    LIMIT 3`
+        db.all(query,(err,data)=>{
+            console.log(data)
+        })
+    }
+
+    release3_5(){
+        let query = `SELECT first_name,last_name,gender,age FROM Voters 
+        WHERE id IN 
+        (select voterId from Votes where politicianId = 
+        (SELECT ID FROM Politicians WHERE name = "Olympia Snowe"))`
+
+        db.all(query,(err,data)=>{
+            console.log(data)
         })
     }
 }
@@ -128,3 +177,8 @@ let votersObj = {
 // insert param 1 bentuk object, param 2 nama table
 // data.insert(votersObj,'Voters')
 // data.deleteTable('Voters',421)
+// data.release3_1()
+// data.release3_2()
+// data.release3_3()
+// data.release3_4()
+// data.release3_5()
