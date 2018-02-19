@@ -16,7 +16,7 @@ let poll_db = new sqlite3.Database('./poll.db', function(err){
 
 poll_db.serialize(function(){
 
-  prep
+  // prep
   let inputPol = poll_db.prepare('INSERT INTO politicians (name, party, location, grade_current) VALUES (?, ?, ?, ?)', function(err){
     if (err) {
       console.log(err);
@@ -47,7 +47,7 @@ poll_db.serialize(function(){
 
 
   // prep
-  let inputVotes = poll_db.prepare('INSERT INTO votes (politicians_id, voter_id) VALUES (?, ?)', function(err){
+  let inputVotes = poll_db.prepare('INSERT INTO votes (voter_id, politicians_id) VALUES (?, ?)', function(err){
     if (err) {
       console.log(err);
     }

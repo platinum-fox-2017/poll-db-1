@@ -36,3 +36,35 @@ CREATE TABLE votes (
 
 INSERT INTO votes (votes_id, politicians_id, voter_id)
 VALUES (votes_id, politicians_id, voter_id)
+
+
+
+
+SELECT COUNT(*) AS totalVotes, name
+FROM politicians
+JOIN votes ON politicians.politicians_id = votes.politicians_id
+WHERE politicians.name = 'Olympia Snowe';
+
+
+SELECT name, COUNT(*) AS totalVotes
+FROM politicians
+JOIN votes ON politicians.politicians_id = votes.politicians_id
+WHERE politicians.name LIKE '%Adam%'
+GROUP BY politicians.name
+
+
+
+SELECT COUNT(*) AS totalVotes, name, party, location
+FROM politicians
+JOIN votes ON politicians.politicians_id = votes.politicians_id
+GROUP BY politicians.name
+ORDER BY totalVotes DESC
+LIMIT 3
+
+
+
+SELECT voter.* 
+FROM politicians
+JOIN votes ON politicians.politicians_id = votes.politicians_id
+JOIN voter ON votes.voter_id = voter.voter_id
+WHERE politicians.name = 'Olympia Snowe';

@@ -22,7 +22,7 @@ poll_db.serialize(function(){
     }
   })
 
-  poll_db.run('CREATE TABLE IF NOT EXISTS votes (votes_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, politicians_id INTEGER, voter_id INTEGER, FOREIGN KEY (politicians_id) REFERENCES politicians(politicians_id), FOREIGN KEY (voter_id) REFERENCES voter(voter_id))', function(err){
+  poll_db.run('CREATE TABLE IF NOT EXISTS votes (votes_id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, voter_id INTEGER, politicians_id INTEGER, FOREIGN KEY (politicians_id) REFERENCES politicians(politicians_id), FOREIGN KEY (voter_id) REFERENCES voter(voter_id))', function(err){
     if (err){
       console.log(err);
     }

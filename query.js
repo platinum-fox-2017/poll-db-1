@@ -69,8 +69,106 @@ function deleteData(tableName, whereCond){
 }
 
 
+function showCompetentPoliticians(party, gradeRange1, gradeRange2) {
+  let poll_db = new sqlite3.Database('./poll.db', function(err){
+    if (err){
+      console.log(err);
+    }
+  });
+
+  poll_db.all(`SELECT name, party, grade_current FROM politicians WHERE party = '${party}' AND grade_current BETWEEN ${gradeRange1} AND ${gradeRange2} `, function(err, rows){
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('data acquired');
+      console.log(rows);
+    }
+  })
+
+  poll_db.close();
+}
+
+function countVoteForPol(name) {
+  let poll_db = new sqlite3.Database('./poll.db', function(err){
+    if (err){
+      console.log(err);
+    }
+  });
+
+  poll_db.get(`SELECT COUNT(*) AS totalVotes, name FROM politicians JOIN votes ON politicians.politicians_id = votes.politicians_id WHERE politicians.name = '${name}'`, function(err, row){
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('data acquired');
+      console.log(row);
+    }
+  })
+  poll_db.close();
+}
+
+
+function countVoteForPolPartial(namePartial) {
+  let poll_db = new sqlite3.Database('./poll.db', function(err){
+    if (err){
+      console.log(err);
+    }
+  });
+
+  poll_db.all(`SELECT name, COUNT(votes.voter_id) AS totalVotes FROM politicians JOIN votes ON politicians.politicians_id = votes.politicians_id WHERE politicians.name LIKE '%${namePartial}%' GROUP BY politicians.name`, function(err, rows){
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('data acquired');
+      console.log(rows);
+    }
+  })
+  poll_db.close();
+}
+
+function topThreePolVotes() {
+  let poll_db = new sqlite3.Database('./poll.db', function(err){
+    if (err){
+      console.log(err);
+    }
+  });
+
+  poll_db.all(`SELECT COUNT(*) AS totalVotes, name, party, location FROM politicians JOIN votes ON politicians.politicians_id = votes.politicians_id GROUP BY politicians.name ORDER BY totalVotes DESC LIMIT 3`, function(err, rows){
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('data acquired');
+      console.log(rows);
+    }
+  })
+  poll_db.close();
+}
+
+
+function voterForPol(name) {
+  let poll_db = new sqlite3.Database('./poll.db', function(err){
+    if (err){
+      console.log(err);
+    }
+  });
+
+  poll_db.all(`SELECT voter.first_name, voter.last_name, voter.gender, voter.age FROM politicians JOIN votes ON politicians.politicians_id = votes.politicians_id JOIN voter ON votes.voter_id = voter.voter_id WHERE politicians.name = '${name}';`, function(err, rows){
+    if (err) {
+      console.log(err);
+    } else {
+      console.log('data acquired');
+      console.log(rows);
+    }
+  })
+  poll_db.close();
+}
+
 // Driver code
 // ###############################
 // insertTableData('voter', [null, 'Teddy', 'Lisman', 'male', '29']);
 // updateTableData('voter', 'first_name', 'Fanny', 'voter_id = 154');
 // deleteData('voter', 'voter_id = 152');
+// showCompetentPoliticians('R', 9, 11)
+// countVoteForPol('Olympia Snowe');
+// countVoteForPolPartial('Adam');
+// topThreePolVotes();
+voterForPol('Olympia Snowe');
