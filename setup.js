@@ -2,7 +2,7 @@ var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('database.db');
  
 db.serialize(function() {
-//   db.run(`create table if not exists Politicians(id integer primary key autoincrement,
+  db.run(`create table if not exists Politicians(id integer primary key autoincrement,
     name varchar(30),
     party varchar(5),
     location varchar(10),

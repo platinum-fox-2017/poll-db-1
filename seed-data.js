@@ -7,30 +7,65 @@ let voters = fs.readFileSync('voters.csv','utf-8').split('\n')
 let votes = fs.readFileSync('votes.csv','utf-8').split('\n')
 
 db.serialize(function() {
-    let result = []
-    // for(let i = 0 ;i < politicians.length-1 ; i++){
-    //     result.push(politicians[i].split(','))
+  let array = []
+    // for(let i = 0 ; i < politicians.length ; i++){
+    //   array.push(politicians[i].split(','))
     // }
-   
-    // for(let i = 1 ; i < result.length ; i++){
-    //     db.run(`insert into Politicians values(null,'${result[i][0]}','${result[i][1]}','${result[i][2]}',${result[i][3]})`)
+
+    // query = 'insert into politicians values '
+    // for(let i = 1 ; i < array.length-1 ; i++){
+    //   let temp = ['null']
+    //   for(let j = 0 ; j < array[i].length ; j++){
+    //     if(j === 3){
+    //       temp.push(Number(array[i][j]))
+    //     }else{
+    //       temp.push(`"${array[i][j]}"`)
+    //     }
+    //   }
+    //   query += `(${temp}),`
     // }
-    //====================================================================
-    // for(let i = 0 ;i < voters.length-1 ; i++){
-    //     result.push(voters[i].split(','))
+    // let string = query.substring(0,[query.length-1])
+    // db.all(string, function(err) {if (err) throw err})
+    //=====================================================================
+    //======================================================================
+    // for(let i = 0 ; i < voters.length ; i++){
+    //   array.push(voters[i].split(','))
     // }
-   
-    // for(let i = 1 ; i < result.length ; i++){
-    //     db.run(`insert into Voters values(null,"${result[i][0]}","${result[i][1]}","${result[i][2]}",${result[i][3]})`)
+
+    // query = 'insert into voters values '
+    // for(let i = 1 ; i < array.length-1 ; i++){
+    //   let temp = ['null']
+    //   for(let j = 0 ; j < array[i].length ; j++){
+    //     if(j === 3){
+    //       temp.push(Number(array[i][j]))
+    //     }else{
+    //       temp.push(`"${array[i][j]}"`)
+    //     }
+    //   }
+    //   query += `(${temp}),`
     // }
-    //==========================================================================
-    // for(let i = 0 ;i < votes.length-1 ; i++){
-    //     result.push(votes[i].split(','))
+    // let string = query.substring(0,[query.length-1])
+
+    // db.all(string, function(err) {if (err) throw err})
+    //===================================================================
+    //===================================================================
+    // for(let i = 0 ; i < votes.length ; i++){
+    //   array.push(votes[i].split(','))
     // }
-       
-    // for(let i = 1 ; i < result.length ; i++){
-    //     db.run(`insert into Votes values(${result[i][0]},${result[i][1]})`)
+
+    // query = 'insert into votes values '
+    // for(let i = 1 ; i < array.length-1 ; i++){
+    //   let temp = []
+    //   for(let j = 0 ; j < array[i].length ; j++){
+    //       temp.push(`${array[i][j]}`)
+    //   }
+    //   query += `(${temp}),`
     // }
+    // let string = query.substring(0,[query.length-1])
+
+    // db.all(string, function(err) {if (err) throw err})
+
+
   });
    
   db.close();
