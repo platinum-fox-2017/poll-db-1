@@ -31,7 +31,7 @@ function deleteVotes(id){
     db.close();
 }
 
-deleteVoters(152)
+// deleteVoters(152)
 
 module.exports = {
     deleteVoters: deleteVoters,
