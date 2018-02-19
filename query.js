@@ -1,5 +1,6 @@
 var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('database.db');
+var Table = require('cli-table')
 
 // selectRating(9,11)
 
@@ -107,10 +108,105 @@ function selectPoliticianRating(min,max){
           FROM Politician
           WHERE grade_current BETWEEN ${min} and ${max}
           ORDER BY grade_current ASC`
+  var table = new Table({
+    head: ['Name', 'Party','Grade Current']
+  });
   db.all(query,function(err,data){
-            console.log(data)
+          for(let i =0;i<data.length;i++){
+            table.push(
+              [`${data[i].name}`,`${data[i].party}`,`${data[i].grade_current}`]
+            )
+          }
+            console.log(table.toString())
           }
         )
 }
 
-selectPoliticianRating(9,11)
+// selectPoliticianRating(9,11)
+
+function countVote(name){
+  let query = `SELECT COUNT(*) as TotalVote, name FROM Politician
+               LEFT JOIN Votes ON Politician.PoliticianID = Votes.politicianID
+               WHERE Politician.name = '${name}'`
+  var table = new Table({
+    head: ['Name','TotalVote']
+  });
+  db.all(query, function(err,data){
+    for(let i =0;i<data.length;i++){
+      table.push(
+        [`${data[i].name}`,`${data[i].TotalVote}`]
+      )
+    }
+      console.log(table.toString())
+          }
+        )
+}
+
+// countVote('Olympia Snowe')
+
+
+function countVoteByName(name){
+  let query = `SELECT Politician.name,COUNT(*) as TotalVote FROM Votes
+               LEFT JOIN Politician ON  Votes.politicianID = Politician.PoliticianID
+               WHERE Politician.name LIKE '${name}%'
+               GROUP BY Politician.name`
+  var table = new Table({
+   head: ['Name','TotalVote']
+  });
+  db.all(query,function(err,data){
+    for(let i =0;i<data.length;i++){
+      table.push(
+        [`${data[i].name}`,`${data[i].TotalVote}`]
+      )
+    }
+      console.log(table.toString())
+          }
+        )
+}
+// countVoteByName('Adam')
+
+
+function mostElectedPolitician(limit){
+  let query = `SELECT COUNT(*) as TotalVote, name, party, location FROM Politician
+               LEFT JOIN Votes ON Politician.PoliticianID = Votes.politicianID
+               GROUP BY name
+               ORDER BY TotalVote DESC
+               LIMIT ${limit}`
+  var table = new Table({
+    head: ['Name','TotalVote','Party','Location']
+  });
+  db.all(query, function(err,data){
+    for(let i =0;i<data.length;i++){
+      table.push(
+        [`${data[i].name}`,`${data[i].TotalVote}`,`${data[i].party}`,`${data[i].location}`]
+      )
+    }
+      console.log(table.toString())
+
+          }
+        )
+}
+// mostElectedPolitician(5)
+
+//subquery
+function searchTheVoters(name){
+let searchName = `SELECT PoliticianID FROM Politician WHERE name = '${name}'`
+let query = `SELECT first_name,last_name,gender,age FROM Voters
+             LEFT JOIN Votes ON Voters.VotersID = Votes.votersId
+            WHERE Votes.politicianID = (${searchName})
+            GROUP BY Votes.votersID`
+var table = new Table({
+  head: ['First Name','Last Name','Gender','Age']
+});
+db.all(query, function(err,data){
+  console.log(data);
+  for(let i =0;i<data.length;i++){
+    table.push(
+      [`${data[i].first_name}`,`${data[i].last_name}`,`${data[i].gender}`,`${data[i].age}`]
+    )
+  }
+    console.log(table.toString())
+      }
+    )
+}
+searchTheVoters('Olympia Snowe')
