@@ -10,49 +10,49 @@ let readVote = fs.readFileSync('votes.csv','utf8')
 
 db.serialize(function() {
   let dataPolitician = readPolitician.split('\n')
-  // for(let i=1;i<dataPolitician.length;i++){
-  //   // console.log(dataPolitician[i].split(','),'---------')
-  //   let dataRow = dataPolitician[i].split(',')
-  //   // console.log('-----'+dataRow[0]+'--------')
-  //   db.run(`insert into Politicians
-  //   values (null,'${dataRow[0]}','${dataRow[1]}','${dataRow[2]}',${dataRow[3]})`,function(err){
-  //     if(err){
-  //       console.log(err)
-  //     }
-  //   })  
-  // }
+  let query = 'insert into Politicians values'
+  for(let i=1;i<dataPolitician.length;i++){
+    let dataRow = dataPolitician[i].split(',')
+    query+=`(null,"${dataRow[0]}","${dataRow[1]}","${dataRow[2]}",${dataRow[3]}),` 
+  }
+  // console.log(query.substring(0, query.length - 1))
+  // console.log(query)
+  let newQuery = query.substring(0, query.length - 1)
+  // db.run(newQuery)
 
-  //voters
+  //voters-------------------------
   let dataVoter = readVoter.split('\n')
-  // for(let j=1;j<dataVoter.length;j++){
-  //   let dataRowVoter = dataVoter[j].split(',')
-  //   // console.log(dataRowVoter[0])
-  //   db.run(`insert into Voters values(
-  //     null,
-  //     "${dataRowVoter[0]}",
-  //     "${dataRowVoter[1]}",
-  //     "${dataRowVoter[2]}",
-  //     ${dataRowVoter[3]}
-  //   )`,function(err){
-  //     if(err){
-  //       console.log(err)
-  //     }
-  //   })
-  // }
+  let arrVoter = []
+  for(let j =1;j<dataVoter.length;j++){
+    arrVoter.push(dataVoter[j].split(','))
+  }
+  // console.log(arrVoter)
+  for(let k =0;k<arrVoter.length;k++){
+    // console.log(arrVoter[k][0])
+    //   db.run(`insert into Voters values(
+    //   null,
+    //   "${arrVoter[k][0]}",
+    //   "${arrVoter[k][1]}",
+    //   "${arrVoter[k][2]}",
+    //   ${arrVoter[k][3]}
+    // )`)
+  }
+
 
 //votes
 let dataVotes = readVote.split('\n')
-// console.log(dataVotes,'----------')
-for(let k=1;k<dataVotes.length;k++){
-  let dataRowVote = dataVotes[k].split(',')
-  
-  // console.log(dataRowVote[0])
-  // db.run(`insert into Votes values(
-  //   null,
-  //   ${dataRowVote[0]},
-  //   ${dataRowVote[1]}
-  // )`)
+let queryVotes = 'insert into Votes values'
+for(let l=1;l<dataVotes.length;l++){
+  let dataRowVote = dataVotes[l].split(',')
+  queryVotes+= `(null,${dataRowVote[0]},${dataRowVote[1]}),`
 }
+// console.log(queryVotes.substring(0,queryVotes.length-1))
+let newQueryVote = queryVotes.substring(0,queryVotes.length-1)
+  // db.run(newQueryVote)
+
+
+
+
 });
  
 db.close();

@@ -9,7 +9,7 @@ AND grade_current between 9 and 11`,function(err,data){
   if(err){
     console.log(err)
   }else{
-    // console.log(data)
+    console.log(data)
   }
 });
 
@@ -21,7 +21,7 @@ where Politicians.name = 'Olympia Snowe'`,(err,data)=>{
   if(err){
     console.log(err)
   }else{
-    // console.log(data)
+    console.log(data)
   }
 })
 // 3 Hitung jumlah vote untuk politician yang nama-nya mengandung kataAdam.
@@ -32,7 +32,7 @@ group by Politicians.name`,(err,data)=>{
   if(err){
     console.log(err)
   }else{
-    // console.log(data)
+    console.log(data)
   }
 })
 // 4 Tampilkan 3 Politician beserta nama partai dan lokasi Politician tersebut,
@@ -45,7 +45,7 @@ limit 3`,(err,data)=>{
   if(err){
     console.log(err)
   }else{
-    // console.log(data)
+    console.log(data)
   }
 })
 // 5 Tampilkan siapa saja yang melakukan voting ke politician yang bernamaOlympia Snowe
